@@ -1,0 +1,57 @@
+:root {
+  --color-primary: #00bcd4;
+  --font: "Roboto", sans-serif;
+  --key-bg: #818384;
+  --key-text-color: #fafafa;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #232323;
+  font-family: var(--font);
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto 8px;
+  touch-action: manipulation;
+  gap: 6px;
+}
+
+#keyboard{
+    height: 40vh;
+    display: grid;
+    place-content: center;
+    align-items: center;
+}
+
+
+.keyboard-letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 0;
+  padding: 0;
+  min-width: 58px;
+  height: 58px;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--key-bg);
+  color: var(--key-text-color);
+}
+
+.keyboard-letter:hover{
+    opacity: .6;
+}
+
+#delete, #enter{
+    min-width: 80px;
+}
