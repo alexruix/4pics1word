@@ -1,57 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 :root {
   --color-primary: #00bcd4;
-  --font: "Roboto", sans-serif;
-  --key-bg: #818384;
-  --key-text-color: #fafafa;
+  --font: "Nunito", sans-serif;
+  --key-bg: #eee;
+  --color-white: #fafafa;
+  --color-black: #232323;
+  --correct-color: #96ff8c;
+  --incorrect-color: #ff7474;
+  --heartCont-color: #d4a373;
+  --bg-color: #14213d;
 }
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: #232323;
+  margin: 0;
+  background: var(--bg-color);
+  background: -webkit-linear-gradient(to right, #171f47, #14213d);
+  background: linear-gradient(to right, #171f47, #14213d);
   font-family: var(--font);
 }
 
-ul {
-  list-style: none;
+main {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+
+.container {
+  /* display: grid;
+  justify-items: center; */
   display: flex;
   justify-content: center;
+  gap: 0.5rem;
   width: 100%;
-  margin: 0 auto 8px;
-  touch-action: manipulation;
-  gap: 6px;
+  padding: 5px 10px;
 }
 
-#keyboard{
-    height: 40vh;
-    display: grid;
-    place-content: center;
-    align-items: center;
+.keyboard {
+  display: flex;
+  flex-direction: column;
 }
 
+.keyboard-container {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.keyboard-tiles {
+  display: flex;
+}
 
 .keyboard-letter {
+  outline: transparent solid 2px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: auto;
+  line-height: 1.2;
+  height: 56px;
+  min-width: 0px;
+  font-size: 1rem;
+  font-weight: bold;
+  flex-grow: 1;
+  text-transform: uppercase;
+  background-color: var(--key-bg);
+  color: var(--color-black);
+  border-radius: 0.5rem;
+  box-shadow: inset 0 -5px 0px 0px #bbb;
+  transition: box-shadow 0.15s ease;
+}
+
+.keyboard-letter:hover {
+  box-shadow: inset 0 -2px 0px 0px #bbb;
+}
+
+.keyboard-letter:active {
+  animation: scaleTile 0.1s ease-out;
+}
+
+.keyboard-letter:disabled {
+  cursor: not-allowed;
+  color: #eee;
+  background-color: #bbb;
+}
+
+@keyframes scaleTile {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+#enter {
+  min-width: 80px;
+}
+
+/*grid */
+.section {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.grid-row {
   display: flex;
   justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  border: 0;
+  gap: 1rem;
   padding: 0;
-  min-width: 58px;
+  margin: 0;
+  width: 100%;
+}
+
+.grid-tiles {
+  border-radius: 0.5rem;
+  width: 58px;
   height: 58px;
-  border-radius: 4px;
-  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  line-height: 2rem;
+  font-weight: bold;
+  vertical-align: middle;
+  color: var(--color-white);
+  text-transform: uppercase;
   user-select: none;
-  background-color: var(--key-bg);
-  color: var(--key-text-color);
+  box-shadow: 0 0 9px 2px #bbbbbb54, inset 0 -4px 0px 0px #bbbbbb54;
 }
 
-.keyboard-letter:hover{
-    opacity: .6;
+/* image */
+.img {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  object-fit: contain;
+  user-select: none;
+  border: 0.5rem solid #232323a8;
+  border-radius: 0.5rem;
 }
 
-#delete, #enter{
-    min-width: 80px;
+/* Title */
+.title-container {
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-white);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--color-white);
+}
+
+.title {
+  margin: 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+}
+
+/* Boolean */
+.correct {
+  color: var(--correct-color);
+}
+.incorrect {
+  animation: incorrectColor 0.25s ease both;
+}
+.grid-tiles.incorrect {
+  animation: incorrectColor 0.25s ease both .15s, incorrectMove 0.25s ease 0.15s;
+}
+
+@keyframes incorrectColor {
+  100% {
+    box-shadow: 0 0 5px 8px #d4161654, inset 0 -4px 0px 0px #d4161654;
+    color: var(--incorrect-color);
+  }
+}
+
+@keyframes incorrectMove {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-5%);
+  }
+  100% {
+    transform: translateX(5%);
+  }
+}
+
+/* Hearts */
+.heart-container {
+  display: flex;
+  gap: 0.25rem;
+  width: max-content;
+  height: 100%;
+  padding: 5px 10px;
+  border-radius: 0.25rem;
+  background-color: #792819;
+  outline: 5px solid #a44333;
+  /* box-shadow: 0 -4px 0px 0px #bbbbbb54; */
+}
+
+.heart {
+  color: #ff1e43;
 }
