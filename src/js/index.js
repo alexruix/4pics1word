@@ -1,7 +1,7 @@
 const keyboard = document.getElementById("keyboard");
 const grid = document.getElementById("grid");
 const section = document.getElementById("section");
-
+const popupId = document.getElementById("popup");
 const keyboardLetters = [
   ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
   ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
@@ -10,49 +10,22 @@ const keyboardLetters = [
 
 const listElements = [];
 let myAnswer = [];
-let level = 0;
+let level = 1;
 let lives = ["1", "2", "3"];
-
-const data = [
-  {
-    word: "hero",
-    image: "https://4pics1-word.com/data/images_big/1434.jpg",
-  },
-  {
-    word: "cold",
-    image: "https://4pics1-word.com/data/images_big/12.jpg",
-  },
-  {
-    word: "wine",
-    image: "https://4pics1-word.com/data/images_big/125.jpg",
-  },
-  {
-    word: "bug",
-    image: "https://4pics1word.ws/images/answers/bug.png",
-  },
-  {
-    word: "leaf",
-    image: "https://4pics1-word.com/data/images_big/5768.jpg",
-  },
-  {
-    word: "mouse",
-    image: "https://4pics1-word.com/data/images_big/477.jpg",
-  },
-  {
-    word: "space",
-    image: "https://4pics1word.ws/images/answers/space.png",
-  },
-];
 
 const onlyLevel = data.map((item) => item.word);
 const onlyImage = data.map((item) => item.image);
 
-let currentLevel = onlyLevel[level];
-let currentImage = onlyImage[level];
+let currentLevel = onlyLevel[level - 1];
+let currentImage = onlyImage[level - 1];
 let secretWord = [...currentLevel];
 
 let position = [];
 let row = [];
+
+let secondsValue = 0;
+let minutesValue = 0;
+let currentInterval;
 
 const pressLetter = () => {
   const btn = event.target; //Selecciona el elemento que hacemos click y devuelve todos sus parametros
@@ -61,7 +34,6 @@ const pressLetter = () => {
     myAnswer.push(btn.id);
     const currentItem = document.getElementById(`tile-${myAnswer.length}`);
     currentItem.textContent = btn.textContent;
-    // console.log(myAnswer.length);
     enterBtn.disabled = true;
     if (myAnswer.length === secretWord.length) {
       enterBtn.disabled = false;
@@ -89,40 +61,29 @@ const img = () => {
   // main.append(section);
 };
 
-// const title = () =>{
-//   const main = document.getElementById("main");
-//   const titleContainer = document.createElement("div");
-//   titleContainer.classList.add("title-container");
-//   const title = document.createElement("h1");
-//   title.classList.add("title");
-//   title.textContent = "4 pics 1 word";
-
-//   titleContainer.appendChild(title);
-//   section.appendChild(titleContainer);
-// }
-
-//
 const wordTiles = () => {
   row = [];
 
   const game = document.getElementById("game");
   const list = document.createElement("ul");
   list.classList.add("grid-row");
-  secretWord.map((tile) => {
+  secretWord.forEach(function (elemento, indice) {
     const listItem = document.createElement("li");
     listItem.classList.add("grid-tiles");
-    listItem.id = `tile-${secretWord.indexOf(tile) + 1}`;
+    listItem.id = `tile-${indice + 1}`;
+
     list.appendChild(listItem);
     row.push(list);
   });
-  // for (let tile = 0; tile < secretWord.length; tile++) {
-  //   const listItem = document.createElement("li");
-  //   listItem.classList.add("grid-tiles");
-  //   listItem.id = `tile-${tile + 1}`;
-  //   list.appendChild(listItem);
-  //   row.push(list);
-  // }
   game.append(...row);
+};
+const changeLevel = () => {
+  currentLevel = onlyLevel[level - 1];
+  currentImage = onlyImage[level - 1];
+  secretWord = [...currentLevel];
+
+  myAnswer = [];
+  position = [];
 };
 
 const checkWord = () => {
@@ -139,40 +100,37 @@ const checkWord = () => {
     }
     position.map((color, id) => {
       const item = document.getElementById(`tile-${id + 1}`);
-      console.log(item, color);
       item.classList.add(color);
     });
 
     if (position.every((positions) => positions === "correct")) {
       //Para saber si todos cumplen la condicion
-      if (level === onlyLevel.length - 1) {
-        level = 0;
-      } else {
-        level++;
-        currentLevel = onlyLevel[level];
-        secretWord = [...currentLevel];
-        currentImage = onlyImage[level];
-        console.log(`levelArray`, onlyLevel[level]);
-        console.log(`level`, level);
-        console.log(`secret`, secretWord);
-        myAnswer = [];
-        position = [];
+      if (level === onlyLevel.length) {
+        //Complete game
+        
 
         setTimeout(() => {
           //Winner popup
+          popup("Congratulations!");
+          // lives = ["1", "2", "3"];
+          // resetAll();
+        }, 600);
+      } else {
+        //you win
+        setTimeout(() => {
+          //Winner popup
+          popup("Excellent!");
           lives = ["1", "2", "3"];
-          resetAll();
         }, 600);
       }
     } else {
-      //Delete Tiles
+      //you lost
       setTimeout(() => {
-        deteleteLives();
+        deleteLives();
+        changeLevel();
         resetAll();
       }, 900);
     }
-  } else {
-    console.log(`Checking...`);
   }
 };
 
@@ -235,42 +193,212 @@ const resetAll = () => {
     console.log(`color`, item);
   });
   section.innerHTML = "";
-  createHeart();
+
+  createHud();
   img();
   wordTiles();
+  clearInterval(currentInterval);
+  timer();
+
   enterBtn.disabled = true;
 };
 
-const winner = () => {};
+const popup = (text) => {
+  clearInterval(currentInterval);
+
+  const container = document.getElementById("popup");
+  container.className = "popup-container";
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  const popupTitle = document.createElement("div");
+  popupTitle.className = "popup-title";
+  const title = document.createElement("h2");
+  title.textContent = text;
+  title.className = "title";
+  const subtitle = document.createElement("span");
+  subtitle.textContent = `Level ${level} complete`;
+  subtitle.className = "subtitle";
+  const starContainer = document.createElement("div");
+  starContainer.className = "star-container";
+  const starSpan = document.createElement("span");
+  starSpan.className = "star";
+  const nextBtn = document.createElement("button");
+  nextBtn.classList.add("keyboard-letter", "keyboard-letter--next");
+  nextBtn.addEventListener("click", nextLevel);
+  nextBtn.textContent = "Next Level";
+
+  let winner = ["one", "two", "three"];
+  const winnerEach = (winner) => {
+    winner.forEach(function () {
+      const star = document.createElement("i");
+      star.classList.add("fa-solid", "fa-star");
+
+      starSpan.appendChild(star);
+      starContainer.appendChild(starSpan);
+    });
+  };
+
+  if (minutesValue <= 0 && secondsValue < 59) {
+    winnerEach(winner);
+  } else if (minutesValue <= 0 && secondsValue > 59) {
+    winner = ["one", "two"];
+    winnerEach(winner);
+    console.log(`Second`, winner);
+  } else {
+    winner = ["one"];
+    winnerEach(winner);
+  }
+
+  const hudContainer = document.createElement("div");
+  hudContainer.classList.add("hud-container", "popup-timer");
+  const timer = document.createElement("p");
+  const timerIcon = document.createElement("i");
+  timerIcon.classList.add("fa-solid", "fa-clock");
+  timer.textContent = `${formatTime(minutesValue)}:${formatTime(secondsValue)}`;
+
+  if (lives.length === 1) {
+    subtitle.textContent = "";
+    starSpan.classList.add("lost");
+    nextBtn.textContent = "Restart game";
+    timerIcon.className = "";
+    timerIcon.classList.add("fa-solid", "fa-award");
+    timer.textContent = `Level: ${level}`;
+    level = 0;
+    lives = [1, 2, 3, 4]
+    nextBtn.addEventListener("click", nextLevel);
+  }
+
+  if(level === ) {
+
+  //Create popup
+  popupTitle.appendChild(title);
+  popupTitle.appendChild(subtitle);
+  popup.appendChild(popupTitle);
+
+  popup.appendChild(starContainer);
+
+  hudContainer.appendChild(timerIcon);
+  hudContainer.appendChild(timer);
+  popup.appendChild(hudContainer);
+
+  popup.appendChild(nextBtn);
+  container.appendChild(popup);
+};
+
+const nextLevel = () => {
+  popupId.classList.add("popup-scale");
+  clearInterval(currentInterval);
+  secondsValue = 00;
+  minutesValue = 00;
+  timer();
+  level++;
+  changeLevel();
+  resetAll();
+  setTimeout(() => {
+    popupId.innerHTML = "";
+    popupId.className = "";
+  }, 1000);
+  // popup();
+};
 
 //Se puede hacer en el else de checkWord
-const deteleteLives = () => {
-  if (lives.length > 0) {
+const deleteLives = () => {
+  if (lives.length > 1) {
     lives.pop();
   } else {
-    //No lives found
-    console.log(`You have ${lives}`);
+    popup("You lost!");
+    lives.pop();
   }
 };
 
-const createHeart = () => {
+const createHud = () => {
   const section = document.getElementById(`section`);
   const container = document.createElement("div");
-  container.className = "heart-container";
+  container.className = "hud-container";
 
+  //Level Display
+  const levelContainer = document.createElement("div");
+  levelContainer.className = "level-container";
+  const levelDisplay = document.createElement("span");
+  levelDisplay.textContent = level;
+
+  //TimeDisplay
+  const timeContainer = document.createElement("div");
+  timeContainer.className = "time-container";
+  const timeIcon = document.createElement("i");
+  timeIcon.classList.add("fa-solid", "fa-clock");
+  const timeDisplay = document.createElement("div");
+  const timeDivider = document.createElement("span");
+  timeDivider.textContent = " : ";
+
+  const timeMinutesDisplay = document.createElement("span");
+  timeMinutesDisplay.textContent = formatTime(minutesValue);
+  timeMinutesDisplay.setAttribute("id", "minutesSpan");
+  const timeSecondsDisplay = document.createElement("span");
+  timeSecondsDisplay.setAttribute("id", "secondsSpan");
+  timeSecondsDisplay.textContent = formatTime(secondsValue);
+
+  //Hearts
+  const heartContainer = document.createElement("div");
+  heartContainer.className = "heart-container";
+
+  //Create hearts
   lives.map((life) => {
-    const heartContainer = document.createElement("span");
-    heartContainer.className = "heart";
-    heartContainer.setAttribute("id", `heart-${life}`);
+    const heartSpan = document.createElement("span");
+    heartSpan.className = "heart";
+    heartSpan.setAttribute("id", `heart-${life}`);
     const heart = document.createElement("i");
     heart.classList.add("fa-solid", "fa-heart");
 
     //Create hearts
-    heartContainer.appendChild(heart);
+    heartSpan.appendChild(heart);
+    heartContainer.appendChild(heartSpan);
     container.appendChild(heartContainer);
     section.append(container);
+
+    //Create levelDisplay
+    levelContainer.appendChild(levelDisplay);
+    container.appendChild(levelContainer);
+
+    //Create timeDisplay
+    timeDisplay.appendChild(timeMinutesDisplay);
+    timeDisplay.appendChild(timeDivider);
+    timeDisplay.appendChild(timeSecondsDisplay);
+    timeContainer.appendChild(timeIcon);
+    timeContainer.appendChild(timeDisplay);
+    container.appendChild(timeContainer);
   });
 };
 
 resetAll();
+
 //Create HTML elements
+
+//Timer
+function timer() {
+  const secondSpan = document.getElementById("secondsSpan");
+  const minutesSpan = document.getElementById("minutesSpan");
+
+  // secondsValue = 00;
+  // minutesValue = 00;
+  currentInterval = setInterval(() => {
+    secondsValue++;
+
+    if (secondsValue === 59) {
+      minutesValue++;
+      secondsValue = 00;
+    }
+    if (minutesValue === 59) {
+      hoursValue++;
+      minutesValue = 00;
+    }
+
+    secondSpan.textContent = formatTime(secondsValue);
+    minutesSpan.textContent = formatTime(minutesValue);
+  }, 1000);
+}
+
+//Function to format time
+function formatTime(time) {
+  return `0${time}`.slice(-2);
+}
