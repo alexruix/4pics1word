@@ -23,6 +23,24 @@ body {
   font-family: var(--font);
 }
 
+select{
+  outline: none;
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: inherit;
+  margin: 0 auto;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+option{
+  font-size: 1rem;
+  background-color: #14213d;
+}
+
 main {
   max-width: 32rem;
   margin: 0 auto;
@@ -376,3 +394,5 @@ main {
 .star.lost {
   color: #bbb;
 }
+
+

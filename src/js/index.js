@@ -11,7 +11,7 @@ const keyboardLetters = [
 const listElements = [];
 let myAnswer = [];
 let level = 1;
-let lives = ["1", "2", "3"];
+let lives = ["1", "2", "3", "4"];
 
 const onlyLevel = data.map((item) => item.word);
 const onlyImage = data.map((item) => item.image);
@@ -107,11 +107,10 @@ const checkWord = () => {
       //Para saber si todos cumplen la condicion
       if (level === onlyLevel.length) {
         //Complete game
-        
 
         setTimeout(() => {
           //Winner popup
-          popup("Congratulations!");
+          popup("Congrats!");
           // lives = ["1", "2", "3"];
           // resetAll();
         }, 600);
@@ -120,7 +119,7 @@ const checkWord = () => {
         setTimeout(() => {
           //Winner popup
           popup("Excellent!");
-          lives = ["1", "2", "3"];
+          lives = ["1", "2", "3", "4"];
         }, 600);
       }
     } else {
@@ -264,11 +263,19 @@ const popup = (text) => {
     timerIcon.classList.add("fa-solid", "fa-award");
     timer.textContent = `Level: ${level}`;
     level = 0;
-    lives = [1, 2, 3, 4]
+    lives = [1, 2, 3, 4, 5];
     nextBtn.addEventListener("click", nextLevel);
   }
 
-  if(level === ) {
+  if (level === data.length) {
+    subtitle.textContent = "Game complete";
+    nextBtn.textContent = "Restart game";
+    timer.textContent = `You complete ${level} levels`;
+    level = 0;
+    lives = [1, 2, 3, 4];
+    timerIcon.classList.add("fa-solid", "fa-trophy");
+    nextBtn.addEventListener("click", nextLevel);
+  }
 
   //Create popup
   popupTitle.appendChild(title);

@@ -1,6 +1,6 @@
 # **Proyecto Wordle #PlatziChallenge**
 
-Este proyecto forma parte del #PlatziChallenge donde se recreó el juego ["Wordle](https://www.nytimes.com/games/wordle/index.html). Sin embargo, decidí adaptar el código para crear el juego [4Pics1Word](https://play.google.com/store/apps/details?id=de.lotum.whatsinthefoto.us). Es mobile first y tiene más de 20 niveles.
+Este proyecto forma parte del #PlatziChallenge donde se recreó el juego ["Wordle](https://www.nytimes.com/games/wordle/index.html). Sin embargo, decidí adaptar el código para crear el juego [4Pics1Word](https://play.google.com/store/apps/details?id=de.lotum.whatsinthefoto.us). Es mobile first y tiene más de 70 niveles.
 
 ## **Estado actual**
 
@@ -8,7 +8,7 @@ Proyecto en proceso. Version en producción: [alexruiz.github.io/4pics1word](htt
 
 ## **Maquetación del proyecto**
 
-La maquetación del proyecto fue realizado en figma e inspirada en las aplicaciones móviles de relojes y alarmas.
+La maquetación del proyecto fue realizado en figma y cumpliendo los estandares de accesibilidad.
 
 ## **Vista previa**
 
@@ -26,10 +26,7 @@ Sin bugs y errores conocidos
 
 ## **Actualizaciones pendientes**
 
-Añadir pantalla de ganar y perder.
 Añadir la opción de cambiar el juego.
-Añadir más idiomas.
-Modificar el estilo de las vidas.
 
 ## **Versiones**
 
