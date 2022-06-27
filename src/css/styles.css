@@ -23,25 +23,83 @@ body {
   font-family: var(--font);
 }
 
-select{
-  outline: none;
-  display: flex;
-  justify-content: center;
-  background: none;
-  border: none;
-  color: inherit;
-  margin: 0 auto;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 2rem;
+.menu {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  min-width: max-content;
+  inset: 0px auto auto 0px;
+  margin: 0px;
+  transform: translate3d(158px, 48px, 0px);
 }
 
-option{
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
   font-size: 1rem;
-  background-color: #14213d;
+  transform: scale(0.8) translateZ(0px);
+
+  outline-offset: 2px;
+  box-shadow: rgba(4, 1, 39, 0.1) 0px 0px 0px 1px,
+    rgba(6, 1, 73, 0.2) 0px 5px 10px, rgba(7, 1, 59, 0.4) 0px 15px 40px;
+  color: inherit;
+  min-width: 14rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  z-index: 1;
+  outline: transparent solid 2px;
+  border-width: 1px;
+  border-radius: 0.5rem;
+  border: 1px solid #ffffff54;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: inherit;
+  user-select: none;
+  display: flex;
+  width: 100%;
+  place-items: center;
+  text-align: start;
+  flex: 0 0 auto;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  padding-inline: 0.8rem;
+  flex-direction: column;
+  font-size: 1.25rem;
+}
+
+.menu-btn {
+  width: max-content;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  outline: none;
+  color: inherit;
+  transition: 0.3s ease-out;
+}
+
+.menu-btn:hover .menu{
+  display: block;
+}
+
+.menu-btn:hover,
+.menu-item:hover {
+  cursor: pointer;
+  background-color: #bbbbbb2d;
 }
 
 main {
+  position: relative;
   max-width: 32rem;
   margin: 0 auto;
 }
@@ -49,8 +107,6 @@ main {
 .container {
   display: grid;
   justify-items: center;
-  /* display: flex;
-  justify-content: center; */
   gap: 0.5rem;
   width: 100%;
   padding: 5px 10px;
@@ -117,12 +173,12 @@ main {
 .keyboard-letter--next {
   background-color: #29b658;
   padding: 0 1rem;
-  box-shadow:none;
+  box-shadow: none;
 }
 
-.keyboard-letter--next:hover{
+.keyboard-letter--next:hover {
   cursor: pointer;
-  opacity: .98;
+  opacity: 0.98;
   box-shadow: none;
 }
 
@@ -195,7 +251,6 @@ main {
   margin: 0 auto;
   text-align: center;
 
-  padding: 1rem;
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--color-white);
 }
@@ -252,13 +307,6 @@ main {
   gap: 0.5rem;
   padding: 5px 10px;
   border-radius: 1.5rem;
-  /* background-color: #bbbbbb54;
-  outline: 2px solid var(--color-white); */
-  /* background-color: #312910; */
-  /* background-color: #792819; */
-  /* outline: 5px solid #792819; */
-  /* outline: 5px solid #a44333; */
-  /* box-shadow: 0 -4px 0px 0px #bbbbbb54; */
 }
 
 .heart {
@@ -311,14 +359,14 @@ main {
 
 .popup-scale {
   background: none;
-  animation: modaleClose .5s ease-in forwards;
+  animation: modaleClose 0.5s ease-in forwards;
 }
 
 @keyframes modaleClose {
-  from{
+  from {
     opacity: 1;
   }
-  to{
+  to {
     opacity: 0;
     transform: translateY(200%);
   }
@@ -334,57 +382,40 @@ main {
   max-width: 32rem;
   color: black;
   margin: 0 auto;
-  /* border: 2px solid #ee9b0054; */
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   background-color: #1f3461;
   padding: 1rem 0;
-  /* position: relative; */
-  /* margin: auto; */
-  /* margin-top: 15%; */
-  /* width: 80%; */
-  /* max-width: 300px; */
-  /* height: 150px; */
-  /* background-color: white; */
-  /* border-radius: 14px; */
   box-shadow: 0 12px 16px 0 rgb(0 0 0 / 24%), 0 17px 50px 0 rgb(0 0 0 / 19%);
-  /* padding: 16px; */
 
   transform: translateY(60%);
-  animation: modalOpen .5s ease-out;
+  animation: modalOpen 0.5s ease-out;
 }
 
-@keyframes modalOpen{
-  from{
+@keyframes modalOpen {
+  from {
     opacity: 0;
     transform: translateY(200%);
   }
-  to{
+  to {
     opacity: 1;
   }
 }
 
 .popup-title {
   color: #29b658;
-  /* text-align: center; */
-  /* border-bottom: 2px solid var(--color-white); */
-  /* background-color: #319304; */
-  /* width: max-content; */
-  /* margin: 0 auto; */
-  /* border-radius: 0 0 1rem 1rem; */
 }
 
-.popup-title .subtitle{
+.popup-title .subtitle {
   color: #ccc;
 }
 
-.popup-timer{
+.popup-timer {
   width: max-content;
-  padding: 0 1.5rem; 
+  padding: 0 1.5rem;
   color: var(--color-white);
   gap: 1rem;
   justify-content: center;
 }
-
 
 .star {
   font-size: 3rem;
@@ -394,5 +425,3 @@ main {
 .star.lost {
   color: #bbb;
 }
-
-

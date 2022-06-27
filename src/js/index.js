@@ -1,3 +1,5 @@
+const spanish = document.getElementById("spanish");
+const english = document.getElementById("english");
 const keyboard = document.getElementById("keyboard");
 const grid = document.getElementById("grid");
 const section = document.getElementById("section");
@@ -12,13 +14,38 @@ const listElements = [];
 let myAnswer = [];
 let level = 1;
 let lives = ["1", "2", "3", "4"];
-
-const onlyLevel = data.map((item) => item.word);
-const onlyImage = data.map((item) => item.image);
-
+let onlyLevel = data.map((item) => item.word);
+let onlyImage = data.map((item) => item.image);
 let currentLevel = onlyLevel[level - 1];
 let currentImage = onlyImage[level - 1];
 let secretWord = [...currentLevel];
+let lang = "english";
+
+const spanishLang = () => {
+  onlyLevel = data.map((item) => item.palabra);
+  onlyImage = data.map((item) => item.imagen);
+  lang = "spanish";
+  defaultItems();
+  resetAll();
+};
+
+const englishLang = () => {
+  onlyLevel = data.map((item) => item.word);
+  onlyImage = data.map((item) => item.image);
+  lang = "english";
+  defaultItems();
+  resetAll();
+};
+
+const defaultItems = () => {
+  level = 1;
+  currentLevel = onlyLevel[level - 1];
+  currentImage = onlyImage[level - 1];
+  secretWord = [...currentLevel];
+  lives = ["1", "2", "3", "4"];
+  secondsValue = 00;
+  minutesValue = 00;
+};
 
 let position = [];
 let row = [];
@@ -44,21 +71,21 @@ const pressLetter = () => {
 };
 
 const img = () => {
-  //Delete img
-  // const section = document.createElement("section");
-  // section.className = "container";
-  // section.setAttribute("id", "section");
   const container = document.createElement("div");
   container.className = "section";
   container.setAttribute("id", "game");
   const img = document.createElement("img");
   img.classList.add("img");
   img.setAttribute("src", currentImage);
-  img.setAttribute("alt", "4Pics 1word");
+
+  if (lang === "english") {
+    img.setAttribute("alt", "4pics 1word");
+  } else {
+    img.setAttribute("alt", "4 fotos 1 palabra");
+  }
 
   container.appendChild(img);
   section.appendChild(container);
-  // main.append(section);
 };
 
 const wordTiles = () => {
@@ -93,6 +120,7 @@ const checkWord = () => {
         case myAnswer[i] === secretWord[i]:
           position.push("correct");
           break;
+        //Add yellow?
         default:
           position.push("incorrect");
           break;
@@ -105,24 +133,33 @@ const checkWord = () => {
 
     if (position.every((positions) => positions === "correct")) {
       //Para saber si todos cumplen la condicion
-      if (level === onlyLevel.length) {
+      if (lang === "english" && level === onlyLevel.length) {
         //Complete game
-
         setTimeout(() => {
-          //Winner popup
           popup("Congrats!");
-          // lives = ["1", "2", "3"];
-          // resetAll();
         }, 600);
+      } else if (lives.length === 1) {
+        lives.push("1");
+        if (lang === "english") {
+          popup("Great!");
+        } else {
+          popup("¡Genial!");
+        }
+        lives = ["1", "2", "3", "4"];
       } else {
         //you win
         setTimeout(() => {
           //Winner popup
-          popup("Excellent!");
+          if (lang === "english") {
+            popup("Excellent!");
+          } else {
+            popup("¡Excelente!");
+          }
           lives = ["1", "2", "3", "4"];
         }, 600);
       }
     } else {
+      console.log("lost live");
       //you lost
       setTimeout(() => {
         deleteLives();
@@ -146,7 +183,6 @@ const deleteLetter = () => {
     console.log(`Deleting..`, myAnswer);
   }
 
-  // myAnswer.length > 0 ? myAnswer.pop() :
 };
 
 keyboardLetters.map((letters) => {
@@ -215,7 +251,6 @@ const popup = (text) => {
   title.textContent = text;
   title.className = "title";
   const subtitle = document.createElement("span");
-  subtitle.textContent = `Level ${level} complete`;
   subtitle.className = "subtitle";
   const starContainer = document.createElement("div");
   starContainer.className = "star-container";
@@ -224,7 +259,14 @@ const popup = (text) => {
   const nextBtn = document.createElement("button");
   nextBtn.classList.add("keyboard-letter", "keyboard-letter--next");
   nextBtn.addEventListener("click", nextLevel);
-  nextBtn.textContent = "Next Level";
+
+  if (lang === "english") {
+    subtitle.textContent = `Level ${level} complete`;
+    nextBtn.textContent = "Next Level";
+  } else {
+    subtitle.textContent = `Nivel ${level} completo`;
+    nextBtn.textContent = "Siguiente";
+  }
 
   let winner = ["one", "two", "three"];
   const winnerEach = (winner) => {
@@ -251,6 +293,7 @@ const popup = (text) => {
   const hudContainer = document.createElement("div");
   hudContainer.classList.add("hud-container", "popup-timer");
   const timer = document.createElement("p");
+  timer.setAttribute("id", "timerPopup");
   const timerIcon = document.createElement("i");
   timerIcon.classList.add("fa-solid", "fa-clock");
   timer.textContent = `${formatTime(minutesValue)}:${formatTime(secondsValue)}`;
@@ -258,19 +301,33 @@ const popup = (text) => {
   if (lives.length === 1) {
     subtitle.textContent = "";
     starSpan.classList.add("lost");
-    nextBtn.textContent = "Restart game";
     timerIcon.className = "";
-    timerIcon.classList.add("fa-solid", "fa-award");
-    timer.textContent = `Level: ${level}`;
+    timerIcon.classList.add("fa-solid", "fa-heart");
     level = 0;
     lives = [1, 2, 3, 4, 5];
     nextBtn.addEventListener("click", nextLevel);
+    nextBtn.disabled = true;
+
+    if (lang === "english") {
+      nextBtn.textContent = "Try again";     
+       timer.textContent = `All lives`; //Add timer
+      console.log(timer.textContent);
+    } else {
+      nextBtn.textContent = "Volver a intentar";
+      timer.textContent = `Todas las vidas en`; //Add timer
+    }
   }
 
   if (level === data.length) {
-    subtitle.textContent = "Game complete";
-    nextBtn.textContent = "Restart game";
-    timer.textContent = `You complete ${level} levels`;
+    if (lang === "english") {
+      subtitle.textContent = "Game complete";
+      nextBtn.textContent = "Restart game";
+      timer.textContent = `You complete ${level} levels`;
+    } else {
+      subtitle.textContent = "Ganaste el juego";
+      nextBtn.textContent = "Volver a jugar";
+      timer.textContent = `Completaste ${level} niveles`;
+    }
     level = 0;
     lives = [1, 2, 3, 4];
     timerIcon.classList.add("fa-solid", "fa-trophy");
@@ -313,15 +370,62 @@ const deleteLives = () => {
   if (lives.length > 1) {
     lives.pop();
   } else {
-    popup("You lost!");
+    if (lang === "english") {
+      popup("You lost!");
+    } else {
+      popup("¡Perdiste!");
+    }
     lives.pop();
   }
 };
 
 const createHud = () => {
+  const main = document.getElementById(`main`);
+  main.innerHTML = "";
   const section = document.getElementById(`section`);
   const container = document.createElement("div");
   container.className = "hud-container";
+
+  //Title
+  const titleContainer = document.createElement("div");
+  titleContainer.className = "title-container";
+  const titleBtn = document.createElement("div");
+  titleBtn.className = "menu-btn";
+  const title = document.createElement("h1");
+  title.className = "title";
+  const span = document.createElement("span");
+  const arrowIcon = document.createElement("i");
+  arrowIcon.classList.add("fa-solid", "fa-angle-down");
+  const menu = document.createElement("div");
+  menu.className = "menu";
+  const menuList = document.createElement("div");
+  menuList.className = "menu-list";
+  const englishBtn = document.createElement("span");
+  englishBtn.className = "menu-item";
+  englishBtn.textContent = "English";
+  const spanishBtn = document.createElement("span");
+  spanishBtn.className = "menu-item";
+  spanishBtn.textContent = "Español";
+
+  spanishBtn.addEventListener("click", spanishLang);
+  englishBtn.addEventListener("click", englishLang);
+
+  if (lang === "english") {
+    title.textContent = "4 pics 1 word";
+  } else {
+    title.textContent = "4 fotos 1 palabra";
+  }
+  //Title Display
+  titleBtn.appendChild(title);
+  span.appendChild(arrowIcon);
+  titleBtn.appendChild(span);
+  titleContainer.appendChild(titleBtn);
+  menu.appendChild(menuList);
+  menuList.appendChild(englishBtn);
+  menuList.appendChild(spanishBtn);
+
+  titleBtn.appendChild(menu);
+  main.appendChild(titleContainer);
 
   //Level Display
   const levelContainer = document.createElement("div");
@@ -379,25 +483,17 @@ const createHud = () => {
 
 resetAll();
 
-//Create HTML elements
-
 //Timer
 function timer() {
   const secondSpan = document.getElementById("secondsSpan");
   const minutesSpan = document.getElementById("minutesSpan");
 
-  // secondsValue = 00;
-  // minutesValue = 00;
   currentInterval = setInterval(() => {
     secondsValue++;
 
     if (secondsValue === 59) {
       minutesValue++;
       secondsValue = 00;
-    }
-    if (minutesValue === 59) {
-      hoursValue++;
-      minutesValue = 00;
     }
 
     secondSpan.textContent = formatTime(secondsValue);
@@ -409,3 +505,4 @@ function timer() {
 function formatTime(time) {
   return `0${time}`.slice(-2);
 }
+

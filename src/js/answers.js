@@ -9,7 +9,7 @@ const data = [
     word: "peace",
     palabra: "paz",
     image: "https://4pics1-word.com/data/images_big/2104.jpg",
-    imagen: "https://4fotos1-palabra.com/data/images_big/2104.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/4112022.jpg",
   },
   {
     word: "cold",
@@ -45,7 +45,7 @@ const data = [
     word: "gas",
     palabra: "gas",
     image: "https://4pics1-word.com/data/images_big/40417028.jpg",
-    image: "https://4pics1-word.com/data/images_big/40417028.jpg",
+    imagen: "https://4pics1-word.com/data/images_big/40417028.jpg",
   },
   {
     word: "danger",
@@ -99,7 +99,7 @@ const data = [
     word: "cat",
     palabra: "gato",
     image: "https://4pics1-word.com/data/images_big/4666.jpg",
-    imagen: "https://4fotos1-palabra.com/data/images_big/4666.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/609.jpg",
   },
   {
     word: "music",
@@ -142,11 +142,11 @@ const data = [
     palabra: "buceo",
     image: "https://4pics1-word.com/data/images_big/1400.jpg",
     imagen: "https://4fotos1-palabra.com/data/images_big/1400.jpg",
-  },  
+  },
   {
-    word: "xmas",
+    word: "gift",
     palabra: "regalo",
-    image: "https://4pics1-word.com/data/images_big/7133.jpg",
+    image: "https://4pics1-word.com/data/images_big/1420.jpg",
     imagen: "https://4fotos1-palabra.com/data/images_big/1420.jpg",
   },
   {
@@ -167,12 +167,7 @@ const data = [
     image: "https://4pics1-word.com/data/images_big/1402.jpg",
     imagen: "https://4fotos1-palabra.com/data/images_big/1402.jpg",
   },
-  {
-    word: "draw",
-    palabra: "pesado",
-    image: "https://4pics1-word.com/data/images_big/483.jpg",
-    imagen: "https://4fotos1-palabra.com/data/images_big/173.jpg",
-  },
+
   {
     word: "snail",
     palabra: "espada",
@@ -197,7 +192,12 @@ const data = [
     image: "https://4pics1-word.com/data/images_big/70616161.jpg",
     imagen: "https://4fotos1-palabra.com/data/images_big/70616161.jpg",
   },
-  
+  {
+    word: "draw",
+    palabra: "pesado",
+    image: "https://4pics1-word.com/data/images_big/483.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/173.jpg",
+  },
   {
     word: "comet",
     palabra: "cometa",
@@ -248,9 +248,9 @@ const data = [
   },
   {
     word: "shoe",
-    palabra: "calzado",
+    palabra: "cola",
     image: "https://4pics1-word.com/data/images_big/2106.jpg",
-    image: "https://4pics1-word.com/data/images_big/2106.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/606.jpg",
   },
   {
     word: "goal",
@@ -268,7 +268,7 @@ const data = [
     word: "ink",
     palabra: "tinta",
     image: "https://4pics1-word.com/data/images_big/478.jpg",
-    image: "https://4fotos1-palabra.com/data/images_big/478.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/478.jpg",
   },
   {
     word: "smile",
@@ -283,10 +283,10 @@ const data = [
     imagen: "https://4fotos1-palabra.com/data/images_big/28031805.jpg",
   },
   {
-    word: "war",
-    palabra: "guerra",
-    image: "https://4pics1-word.com/data/images_big/5722.jpg",
-    imagen: "https://4pics1-word.com/data/images_big/5722.jpg",
+    word: "web",
+    palabra: "aguja",
+    image: "https://4pics1-word.com/data/images_big/6894.jpg",
+    imagen: "https://4pics1-word.com/data/images_big/241119264.jpg",
   },
   {
     word: "dark",
@@ -316,7 +316,7 @@ const data = [
     word: "mother",
     palabra: "madre",
     image: "https://4pics1-word.com/data/images_big/1410.jpg",
-    image: "https://4fotos1-palabra.com/data/images_big/1410.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/1410.jpg",
   },
   {
     word: "flag",
@@ -331,10 +331,10 @@ const data = [
     imagen: "https://4fotos1-palabra.com/data/images_big/1312217.jpg",
   },
   {
-    word: "baby",
-    palabra: "bebe",
-    image: "https://4pics1-word.com/data/images_big/2450.jpg",
-    imagen: "https://4fotos1-palabra.com/data/images_big/2450.jpg",
+    word: "canoe",
+    palabra: "canoa",
+    image: "https://4pics1-word.com/data/images_big/21102146.jpg",
+    imagen: "https://4fotos1-palabra.com/data/images_big/21102146.jpg",
   },
   {
     word: "tiger",
