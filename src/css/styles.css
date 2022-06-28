@@ -29,7 +29,7 @@ body {
   z-index: 999;
   min-width: max-content;
   inset: 0px auto auto 0px;
-  transform: translate3d(80%, 48px, 0);
+  transform: translate3d(80%, 32px, 0);
 }
 
 .menu-list {
@@ -73,7 +73,7 @@ body {
 
 .menu-btn {
   width: max-content;
-  border-radius: 1rem;
+  border-radius: .5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -259,7 +259,7 @@ main {
   margin: 0;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .subtitle {

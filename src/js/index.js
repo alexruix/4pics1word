@@ -329,9 +329,9 @@ const popup = (text) => {
         )}`;
         nextBtn.textContent = "Try again";
       } else {
-        timer.textContent = `Todas las vidas en ${formatTime(
-          minutesValue
-        )}:${formatTime(secondsValue)}`;
+        timer.textContent = `Todas las vidas en ${formatTime(minutesValue)}:${formatTime(
+          secondsValue
+        )}`;
         nextBtn.textContent = "Volver a intentar";
       }
     }, 1000);
