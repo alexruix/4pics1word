@@ -149,7 +149,6 @@ const checkWord = () => {
       } else {
         //you win
         setTimeout(() => {
-          //Winner popup
           if (lang === "english") {
             popup("Excellent!");
           } else {
@@ -159,12 +158,11 @@ const checkWord = () => {
         }, 600);
       }
     } else {
-      console.log("lost live");
       //you lost
       setTimeout(() => {
         deleteLives();
         changeLevel();
-        resetAll();
+        console.log("reset");
       }, 900);
     }
   }
@@ -182,7 +180,6 @@ const deleteLetter = () => {
   } else {
     console.log(`Deleting..`, myAnswer);
   }
-
 };
 
 keyboardLetters.map((letters) => {
@@ -299,23 +296,46 @@ const popup = (text) => {
   timer.textContent = `${formatTime(minutesValue)}:${formatTime(secondsValue)}`;
 
   if (lives.length === 1) {
+    console.log(`Lives: ${lives.length}`);
     subtitle.textContent = "";
     starSpan.classList.add("lost");
+    nextBtn.disabled = true;
+    console.log(timer);
+    level--;
+    secondsValue = 0;
+    minutesValue = 3;
+    timer.textContent = ` `;
     timerIcon.className = "";
     timerIcon.classList.add("fa-solid", "fa-heart");
-    level = 0;
-    lives = [1, 2, 3, 4, 5];
-    nextBtn.addEventListener("click", nextLevel);
-    nextBtn.disabled = true;
 
-    if (lang === "english") {
-      nextBtn.textContent = "Try again";     
-       timer.textContent = `All lives`; //Add timer
-      console.log(timer.textContent);
-    } else {
-      nextBtn.textContent = "Volver a intentar";
-      timer.textContent = `Todas las vidas en`; //Add timer
-    }
+    currentInterval = setInterval(() => {
+      secondsValue--;
+
+      if (secondsValue === -1) {
+        minutesValue--;
+        secondsValue = 59;
+      }
+      if (minutesValue === -1) {
+        minutesValue = 0;
+      }
+      if (secondsValue === 00 && minutesValue === 00) {
+        clearInterval(currentInterval);
+        nextBtn.disabled = false;
+      }
+
+      if (lang === "english") {
+        timer.textContent = `All lives ${formatTime(minutesValue)}:${formatTime(
+          secondsValue
+        )}`;
+        nextBtn.textContent = "Try again";
+      } else {
+        timer.textContent = `Todas las vidas en ${formatTime(
+          minutesValue
+        )}:${formatTime(secondsValue)}`;
+        nextBtn.textContent = "Volver a intentar";
+      }
+    }, 1000);
+    lives = [1, 2, 3, 4];
   }
 
   if (level === data.length) {
@@ -328,7 +348,7 @@ const popup = (text) => {
       nextBtn.textContent = "Volver a jugar";
       timer.textContent = `Completaste ${level} niveles`;
     }
-    level = 0;
+    // level = 0;
     lives = [1, 2, 3, 4];
     timerIcon.classList.add("fa-solid", "fa-trophy");
     nextBtn.addEventListener("click", nextLevel);
@@ -369,13 +389,13 @@ const nextLevel = () => {
 const deleteLives = () => {
   if (lives.length > 1) {
     lives.pop();
+    resetAll();
   } else {
     if (lang === "english") {
       popup("You lost!");
     } else {
       popup("¡Perdiste!");
     }
-    lives.pop();
   }
 };
 
@@ -505,4 +525,3 @@ function timer() {
 function formatTime(time) {
   return `0${time}`.slice(-2);
 }
-

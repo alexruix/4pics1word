@@ -29,8 +29,7 @@ body {
   z-index: 999;
   min-width: max-content;
   inset: 0px auto auto 0px;
-  margin: 0px;
-  transform: translate3d(158px, 48px, 0px);
+  transform: translate3d(80%, 48px, 0);
 }
 
 .menu-list {
@@ -88,7 +87,7 @@ body {
   transition: 0.3s ease-out;
 }
 
-.menu-btn:hover .menu{
+.menu-btn:hover .menu {
   display: block;
 }
 
@@ -256,10 +255,11 @@ main {
 }
 
 .title {
+  user-select: none;
   margin: 0;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .subtitle {
@@ -424,4 +424,10 @@ main {
 
 .star.lost {
   color: #bbb;
+}
+
+@media screen and (max-width: 375px) {
+  .grid-row {
+    max-width: 300px;
+  }
 }
